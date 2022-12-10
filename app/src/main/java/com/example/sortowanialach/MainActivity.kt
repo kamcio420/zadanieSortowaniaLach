@@ -44,5 +44,22 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+
+        //SORT BUTTON ACTION
+        sortButton.setOnClickListener() {
+            val numbers = ArrayList<Int>()
+            for(i in 0..(elements.text.toString().toInt() - 1))
+            {
+                numbers.add(Random.nextInt(0, 99))
+            }
+
+            bubbleSorting(numbers)
+
+            for(elem in numbers)
+            {
+                sortResultOutput.text = sortResultOutput.text.toString() + elem.toString() + ", "
+            }
+        }
     }
 }
