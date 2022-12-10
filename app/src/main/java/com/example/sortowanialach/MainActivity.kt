@@ -25,6 +25,20 @@ class MainActivity : AppCompatActivity() {
         val s4 = findViewById<TextView>(R.id.heapsortTIme)
         val s5 = findViewById<TextView>(R.id.scalanieTime)
 
+        //INSERTION SORTING
+        fun insertionSorting(arr:ArrayList<Int>){
+            for (count in 1..arr.count() - 1){
+                // println(items)
+                val item = arr[count]
+                var i = count
+                while (i>0 && item < arr[i - 1]){
+                    arr[i] = arr[i - 1]
+                    i -= 1
+                }
+                arr[i] = item
+            }
+        }
+
         //BUBBLE SORTING
         fun bubbleSorting(arr:ArrayList<Int>)
         {
@@ -67,7 +81,19 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            s2.text = bubbleTime.toString() + "ms"
+            val insertionTime= measureTimeMillis { //time counting
+                for(i in 0..times.text.toString().toInt())
+                {
+                    insertionSorting(numbers)
+                    for (i in 0..elements.text.toString().toInt())
+                    {
+                        numbers[i] = (Random.nextInt(0, 99))
+                    }
+                }
+            }
+
+            s1.text = insertionTime.toString() + " ms"
+            s2.text = bubbleTime.toString() + " ms"
         }
     }
 }
