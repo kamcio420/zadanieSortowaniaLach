@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.TextView
 import com.google.android.material.textfield.TextInputEditText
 import kotlin.random.Random
+import kotlin.system.measureTimeMillis
 
 class MainActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
@@ -23,7 +24,6 @@ class MainActivity : AppCompatActivity() {
         val s3 = findViewById<TextView>(R.id.szybkieTime)
         val s4 = findViewById<TextView>(R.id.heapsortTIme)
         val s5 = findViewById<TextView>(R.id.scalanieTime)
-        val sortResultOutput = findViewById<TextView>(R.id.sortResult)
 
         //BUBBLE SORTING
         fun bubbleSorting(arr:ArrayList<Int>)
@@ -49,17 +49,25 @@ class MainActivity : AppCompatActivity() {
         //SORT BUTTON ACTION
         sortButton.setOnClickListener() {
             val numbers = ArrayList<Int>()
-            for(i in 0..(elements.text.toString().toInt() - 1))
+
+
+            for(i in 0..elements.text.toString().toInt())
             {
                 numbers.add(Random.nextInt(0, 99))
             }
 
-            bubbleSorting(numbers)
-
-            for(elem in numbers)
-            {
-                sortResultOutput.text = sortResultOutput.text.toString() + elem.toString() + ", "
+            val bubbleTime= measureTimeMillis { //time counting
+                for(i in 0..times.text.toString().toInt())
+                {
+                    bubbleSorting(numbers)
+                    for (i in 0..elements.text.toString().toInt())
+                    {
+                        numbers[i] = (Random.nextInt(0, 99))
+                    }
+                }
             }
+
+            s2.text = bubbleTime.toString() + "ms"
         }
     }
 }
