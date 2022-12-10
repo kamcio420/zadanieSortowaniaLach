@@ -172,80 +172,86 @@ class MainActivity : AppCompatActivity() {
 
         //SORT BUTTON ACTION
         sortButton.setOnClickListener() {
-            val numbers = ArrayList<Int>()
-
-            //Creating array with random numbers
-            for(i in 0..elements.text.toString().toInt())
+            if(elements.text.toString().trim().length > 0 && times.text.toString().trim().length > 0)
             {
-                numbers.add(Random.nextInt(0, 99))
-            }
-
-            //Insertion time counting
-            val insertionTime= measureTimeMillis { //time counting
-                for(i in 0..times.text.toString().toInt())
+                if(elements.text.toString().toInt() > 0 && times.text.toString().toInt() > 0)
                 {
-                    insertionSorting(numbers)
-                    for (i in 0..elements.text.toString().toInt())
+                    if(elements.text.toString().toInt() < 5001 && times.text.toString().toInt() < 5001)
                     {
-                        numbers[i] = (Random.nextInt(0, 99))
+                        findViewById<TextView>(R.id.infoText).text = ""
+
+                        val numbers = ArrayList<Int>()
+
+                        //Creating array with random numbers
+                        for (i in 0..elements.text.toString().toInt()) {
+                            numbers.add(Random.nextInt(0, 99))
+                        }
+
+                        //Insertion time counting
+                        val insertionTime = measureTimeMillis { //time counting
+                            for (i in 0..times.text.toString().toInt()) {
+                                insertionSorting(numbers)
+                                for (i in 0..elements.text.toString().toInt()) {
+                                    numbers[i] = (Random.nextInt(0, 99))
+                                }
+                            }
+                        }
+
+                        //Bubble time counting
+                        val bubbleTime = measureTimeMillis { //time counting
+                            for (i in 0..times.text.toString().toInt()) {
+                                bubbleSorting(numbers)
+                                for (i in 0..elements.text.toString().toInt()) {
+                                    numbers[i] = (Random.nextInt(0, 99))
+                                }
+                            }
+                        }
+
+                        //Quick time counting
+                        val quickTime = measureTimeMillis { //time counting
+                            for (i in 0..times.text.toString().toInt()) {
+                                quicksort(numbers.toList())
+                                for (i in 0..elements.text.toString().toInt()) {
+                                    numbers[i] = (Random.nextInt(0, 99))
+                                }
+                            }
+                        }
+
+                        //Heap time counting
+                        val heapTime = measureTimeMillis { //time counting
+                            for (i in 0..times.text.toString().toInt()) {
+                                heapsort(numbers)
+                                for (i in 0..elements.text.toString().toInt()) {
+                                    numbers[i] = (Random.nextInt(0, 99))
+                                }
+                            }
+                        }
+
+                        //Merge time counting
+                        val mergeTime = measureTimeMillis { //time counting
+                            for (i in 0..times.text.toString().toInt()) {
+                                mergesort(numbers)
+                                for (i in 0..elements.text.toString().toInt()) {
+                                    numbers[i] = (Random.nextInt(0, 99))
+                                }
+                            }
+                        }
+
+
+                        s1.text = insertionTime.toString() + " ms"
+                        s2.text = bubbleTime.toString() + " ms"
+                        s3.text = quickTime.toString() + " ms"
+                        s4.text = heapTime.toString() + " ms"
+                        s5.text = mergeTime.toString() + " ms"
                     }
+                    else
+                        findViewById<TextView>(R.id.infoText).text = "Nie przesadzaj, nie będę tyle sortować"
                 }
+                else
+                    findViewById<TextView>(R.id.infoText).text = "Wpisane liczby muszą być większe od 0!"
             }
-
-            //Bubble time counting
-            val bubbleTime= measureTimeMillis { //time counting
-                for(i in 0..times.text.toString().toInt())
-                {
-                    bubbleSorting(numbers)
-                    for (i in 0..elements.text.toString().toInt())
-                    {
-                        numbers[i] = (Random.nextInt(0, 99))
-                    }
-                }
-            }
-
-            //Quick time counting
-            val quickTime= measureTimeMillis { //time counting
-                for(i in 0..times.text.toString().toInt())
-                {
-                    quicksort(numbers.toList())
-                    for (i in 0..elements.text.toString().toInt())
-                    {
-                        numbers[i] = (Random.nextInt(0, 99))
-                    }
-                }
-            }
-
-            //Heap time counting
-            val heapTime= measureTimeMillis { //time counting
-                for(i in 0..times.text.toString().toInt())
-                {
-                    heapsort(numbers)
-                    for (i in 0..elements.text.toString().toInt())
-                    {
-                        numbers[i] = (Random.nextInt(0, 99))
-                    }
-                }
-            }
-
-            //Merge time counting
-            val mergeTime= measureTimeMillis { //time counting
-                for(i in 0..times.text.toString().toInt())
-                {
-                    mergesort(numbers)
-                    for (i in 0..elements.text.toString().toInt())
-                    {
-                        numbers[i] = (Random.nextInt(0, 99))
-                    }
-                }
-            }
-
-
-            s1.text = insertionTime.toString() + " ms"
-            s2.text = bubbleTime.toString() + " ms"
-            s3.text = quickTime.toString() + " ms"
-            s4.text = heapTime.toString() + " ms"
-            s5.text = mergeTime.toString() + " ms"
+            else
+                findViewById<TextView>(R.id.infoText).text = "Wypełnij pola!"
         }
     }
 }
